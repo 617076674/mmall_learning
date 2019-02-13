@@ -118,6 +118,9 @@ public class OrderController {
             logger.error("支付宝验证回调异常",e);
         }
         //todo 验证各种数据
+        if(!iOrderService.checkData(params).isSuccess()){
+            return ServerResponse.createByErrorMessage("非法请求,验证不通过,再恶意请求我就报警找网警了");
+        }
         ServerResponse serverResponse = iOrderService.aliCallback(params);
         if(serverResponse.isSuccess()){
             return Const.AlipayCallback.RESPONSE_SUCCESS;

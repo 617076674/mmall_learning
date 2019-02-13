@@ -47,11 +47,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service("iOrderService")
 public class OrderServiceImpl implements IOrderService {
@@ -508,7 +504,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public ServerResponse<String> manageSendGoods(Long orderNo){
-        Order order= orderMapper.selectByOrderNo(orderNo);
+        Order order = orderMapper.selectByOrderNo(orderNo);
         if(order != null){
             if(order.getStatus() == Const.OrderStatusEnum.PAID.getCode()){
                 order.setStatus(Const.OrderStatusEnum.SHIPPED.getCode());
@@ -518,5 +514,21 @@ public class OrderServiceImpl implements IOrderService {
             }
         }
         return ServerResponse.createByErrorMessage("订单不存在");
+    }
+
+    @Override
+    public ServerResponse checkData(Map<String, String> params){
+        Long orderNo  = Long.parseLong(params.get("out_trade_no"));
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if(null == order){
+            return ServerResponse.createByErrorMessage("数据校验失败，订单号不存在");
+        }
+        if(order.getPayment().doubleValue() != new BigDecimal(params.get("total_amount")).doubleValue()){
+            return ServerResponse.createByErrorMessage("数据校验失败，订单金额不一致");
+        }
+        if(!Objects.equals(Configs.getPid(), params.get("seller_id"))){
+            return ServerResponse.createByErrorMessage("数据校验失败，卖家支付宝账号不一致");
+        }
+        return ServerResponse.createBySuccess();
     }
 }
