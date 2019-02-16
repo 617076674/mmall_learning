@@ -16,14 +16,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Created by geely
+ */
 @Service("iCategoryService")
 public class CategoryServiceImpl implements ICategoryService {
+
     private Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
     @Autowired
     private CategoryMapper categoryMapper;
 
-    public ServerResponse addCategory(String categoryName, Integer parentId){
+    public ServerResponse addCategory(String categoryName,Integer parentId){
         if(parentId == null || StringUtils.isBlank(categoryName)){
             return ServerResponse.createByErrorMessage("添加品类参数错误");
         }

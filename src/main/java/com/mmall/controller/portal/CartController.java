@@ -13,17 +13,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Created by geely
+ */
 @Controller
 @RequestMapping("/cart/")
 public class CartController {
+
     @Autowired
     private ICartService iCartService;
+
+
 
     @RequestMapping("list.do")
     @ResponseBody
     public ServerResponse<CartVo> list(HttpSession session){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(null == user){
+        if(user ==null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         return iCartService.list(user.getId());
@@ -36,8 +42,10 @@ public class CartController {
         if(user ==null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iCartService.add(user.getId(), productId, count);
+        return iCartService.add(user.getId(),productId,count);
     }
+
+
 
     @RequestMapping("update.do")
     @ResponseBody
@@ -59,6 +67,7 @@ public class CartController {
         return iCartService.deleteProduct(user.getId(),productIds);
     }
 
+
     @RequestMapping("select_all.do")
     @ResponseBody
     public ServerResponse<CartVo> selectAll(HttpSession session){
@@ -78,6 +87,8 @@ public class CartController {
         }
         return iCartService.selectOrUnSelect(user.getId(),null,Const.Cart.UN_CHECKED);
     }
+
+
 
     @RequestMapping("select.do")
     @ResponseBody
@@ -99,6 +110,8 @@ public class CartController {
         return iCartService.selectOrUnSelect(user.getId(),productId,Const.Cart.UN_CHECKED);
     }
 
+
+
     @RequestMapping("get_cart_product_count.do")
     @ResponseBody
     public ServerResponse<Integer> getCartProductCount(HttpSession session){
@@ -108,4 +121,19 @@ public class CartController {
         }
         return iCartService.getCartProductCount(user.getId());
     }
+
+
+
+
+    //全选
+    //全反选
+
+    //单独选
+    //单独反选
+
+    //查询当前用户的购物车里面的产品数量,如果一个产品有10个,那么数量就是10.
+
+
+
+
 }

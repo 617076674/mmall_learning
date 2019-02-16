@@ -23,15 +23,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+/**
+ * Created by geely
+ */
+
 @Controller
 @RequestMapping("/manage/product")
 public class ProductManageController {
+
     @Autowired
     private IUserService iUserService;
-
     @Autowired
     private IProductService iProductService;
-
     @Autowired
     private IFileService iFileService;
 
@@ -41,6 +44,7 @@ public class ProductManageController {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
+
         }
         if(iUserService.checkAdminRole(user).isSuccess()){
             //填充我们增加产品的业务逻辑
@@ -56,6 +60,7 @@ public class ProductManageController {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
+
         }
         if(iUserService.checkAdminRole(user).isSuccess()){
             return iProductService.setSaleStatus(productId,status);
@@ -70,6 +75,7 @@ public class ProductManageController {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
+
         }
         if(iUserService.checkAdminRole(user).isSuccess()){
             //填充业务
@@ -86,6 +92,7 @@ public class ProductManageController {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
+
         }
         if(iUserService.checkAdminRole(user).isSuccess()){
             //填充业务
@@ -101,6 +108,7 @@ public class ProductManageController {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
+
         }
         if(iUserService.checkAdminRole(user).isSuccess()){
             //填充业务
@@ -130,6 +138,7 @@ public class ProductManageController {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
     }
+
 
     @RequestMapping("richtext_img_upload.do")
     @ResponseBody
@@ -167,4 +176,33 @@ public class ProductManageController {
             return resultMap;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

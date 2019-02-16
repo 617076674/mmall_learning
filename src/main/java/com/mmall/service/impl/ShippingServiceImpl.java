@@ -29,7 +29,7 @@ public class ShippingServiceImpl implements IShippingService {
         if(rowCount > 0){
             Map result = Maps.newHashMap();
             result.put("shippingId",shipping.getId());
-            return ServerResponse.createBySuccess("新建地址成功", result);
+            return ServerResponse.createBySuccess("新建地址成功",result);
         }
         return ServerResponse.createByErrorMessage("新建地址失败");
     }

@@ -9,6 +9,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Created by geely
+ */
 public class FTPUtil {
 
     private static  final Logger logger = LoggerFactory.getLogger(FTPUtil.class);
@@ -31,6 +34,7 @@ public class FTPUtil {
         return result;
     }
 
+
     private boolean uploadFile(String remotePath,List<File> fileList) throws IOException {
         boolean uploaded = true;
         FileInputStream fis = null;
@@ -46,6 +50,7 @@ public class FTPUtil {
                     fis = new FileInputStream(fileItem);
                     ftpClient.storeFile(fileItem.getName(),fis);
                 }
+
             } catch (IOException e) {
                 logger.error("上传文件异常",e);
                 uploaded = false;
@@ -72,6 +77,17 @@ public class FTPUtil {
         }
         return isSuccess;
     }
+
+
+
+
+
+
+
+
+
+
+
     private String ip;
     private int port;
     private String user;

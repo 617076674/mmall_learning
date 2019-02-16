@@ -9,13 +9,19 @@ import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 
+/**
+ * Created by geely
+ */
 @Service("iUserService")
 public class UserServiceImpl implements IUserService {
+
     @Autowired
     private UserMapper userMapper;
+
 
     @Override
     public ServerResponse<User> login(String username, String password) {
@@ -23,6 +29,7 @@ public class UserServiceImpl implements IUserService {
         if(resultCount == 0 ){
             return ServerResponse.createByErrorMessage("用户名不存在");
         }
+
         String md5Password = MD5Util.MD5EncodeUtf8(password);
         User user  = userMapper.selectLogin(username,md5Password);
         if(user == null){
@@ -32,6 +39,8 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
         return ServerResponse.createBySuccess("登录成功",user);
     }
+
+
 
     public ServerResponse<String> register(User user){
         ServerResponse validResponse = this.checkValid(user.getUsername(),Const.USERNAME);
@@ -98,6 +107,8 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("问题的答案错误");
     }
 
+
+
     public ServerResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken){
         if(org.apache.commons.lang3.StringUtils.isBlank(forgetToken)){
             return ServerResponse.createByErrorMessage("参数错误,token需要传递");
@@ -141,6 +152,7 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("密码更新失败");
     }
 
+
     public ServerResponse<User> updateInformation(User user){
         //username是不能被更新的
         //email也要进行一个校验,校验新的email是不是已经存在,并且存在的email如果相同的话,不能是我们当前的这个用户的.
@@ -162,6 +174,8 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("更新个人信息失败");
     }
 
+
+
     public ServerResponse<User> getInformation(Integer userId){
         User user = userMapper.selectByPrimaryKey(userId);
         if(user == null){
@@ -172,11 +186,23 @@ public class UserServiceImpl implements IUserService {
 
     }
 
+
+
+
     //backend
+
+    /**
+     * 校验是否是管理员
+     * @param user
+     * @return
+     */
     public ServerResponse checkAdminRole(User user){
         if(user != null && user.getRole().intValue() == Const.Role.ROLE_ADMIN){
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByError();
     }
+
+
+
 }

@@ -15,11 +15,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Created by geely
+ */
+
 @Controller
 @RequestMapping("/shipping/")
 public class ShippingController {
+
+
     @Autowired
     private IShippingService iShippingService;
+
 
     @RequestMapping("add.do")
     @ResponseBody
@@ -30,6 +37,7 @@ public class ShippingController {
         }
         return iShippingService.add(user.getId(),shipping);
     }
+
 
     @RequestMapping("del.do")
     @ResponseBody
@@ -51,6 +59,7 @@ public class ShippingController {
         return iShippingService.update(user.getId(),shipping);
     }
 
+
     @RequestMapping("select.do")
     @ResponseBody
     public ServerResponse<Shipping> select(HttpSession session,Integer shippingId){
@@ -60,6 +69,7 @@ public class ShippingController {
         }
         return iShippingService.select(user.getId(),shippingId);
     }
+
 
     @RequestMapping("list.do")
     @ResponseBody
@@ -72,4 +82,18 @@ public class ShippingController {
         }
         return iShippingService.list(user.getId(),pageNum,pageSize);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
