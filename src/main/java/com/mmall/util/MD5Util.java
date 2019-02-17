@@ -1,13 +1,10 @@
 package com.mmall.util;
 
-import org.springframework.util.StringUtils;
-
 import java.security.MessageDigest;
 
-/**
- * Created by geely
- */
 public class MD5Util {
+
+    private static final String hexDigits[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
     private static String byteArrayToHexString(byte b[]) {
         StringBuffer resultSb = new StringBuffer();
@@ -28,10 +25,6 @@ public class MD5Util {
 
     /**
      * 返回大写MD5
-     *
-     * @param origin
-     * @param charsetname
-     * @return
      */
     private static String MD5Encode(String origin, String charsetname) {
         String resultString = null;
@@ -51,9 +44,5 @@ public class MD5Util {
         origin = origin + PropertiesUtil.getProperty("password.salt", "");
         return MD5Encode(origin, "utf-8");
     }
-
-
-    private static final String hexDigits[] = {"0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
 }

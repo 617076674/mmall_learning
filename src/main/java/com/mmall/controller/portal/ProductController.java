@@ -10,18 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Created by geely
- */
-
 @Controller
 @RequestMapping("/product/")
 public class ProductController {
 
     @Autowired
     private IProductService iProductService;
-
-
 
     @RequestMapping("detail.do")
     @ResponseBody
@@ -38,9 +32,4 @@ public class ProductController {
                                          @RequestParam(value = "orderBy",defaultValue = "") String orderBy){
         return iProductService.getProductByKeywordCategory(keyword,categoryId,pageNum,pageSize,orderBy);
     }
-
-
-
-
-
 }

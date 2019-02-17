@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface OrderItemMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(OrderItem record);
@@ -22,9 +23,6 @@ public interface OrderItemMapper {
 
     List<OrderItem> getByOrderNo(@Param("orderNo")Long orderNo);
 
-
-
     void batchInsert(@Param("orderItemList") List<OrderItem> orderItemList);
-
 
 }

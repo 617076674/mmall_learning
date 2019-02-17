@@ -14,13 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
-/**
- * Created by geely
- */
 @Controller
 @RequestMapping("/manage/category")
 public class CategoryManageController {
-
 
     @Autowired
     private IUserService iUserService;
@@ -92,12 +88,4 @@ public class CategoryManageController {
             return ServerResponse.createByErrorMessage("无权限操作,需要管理员权限");
         }
     }
-
-
-
-
-
-
-
-
 }

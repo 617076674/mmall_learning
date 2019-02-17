@@ -21,14 +21,12 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * Created by geely
- */
 @Service("iCartService")
 public class CartServiceImpl implements ICartService {
 
     @Autowired
     private CartMapper cartMapper;
+
     @Autowired
     private ProductMapper productMapper;
 
@@ -36,8 +34,6 @@ public class CartServiceImpl implements ICartService {
         if(productId == null || count == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-
-
         Cart cart = cartMapper.selectCartByUserIdProductId(userId,productId);
         if(cart == null){
             //这个产品不在这个购物车里,需要新增一个这个产品的记录
