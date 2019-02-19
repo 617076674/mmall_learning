@@ -14,10 +14,17 @@ public class CookieUtil {
 
     private final static String COOKIE_NAME = "mmall_login_token";
 
+    // X: domain=".617076674.cn"
+    // a: A.617076674.cn                cookie:domain=A.617076674.cn;path="/"
+    // b: B.617076674.cn                cookie:domain=B.617076674.cn;path="/"
+    // c: A.617076674.cn/test/cc        cookie:domain=A.617076674.cn;path="/test/cc"
+    // d: A.617076674.cn/test/dd        cookie:domain=A.617076674.cn;path="/test/dd"
+    // e: A.617076674.cn/test           cookie:domain=A.617076674.cn;path="/test"
     public static void writeLoginToken(HttpServletResponse response, String token){
         Cookie ck = new Cookie(COOKIE_NAME, token);
         ck.setDomain(COOKIE_DOMAIN);
         ck.setPath("/");    //代表设置在根目录
+        ck.setHttpOnly(true);   //防止脚本获取cookie信息，保证信息安全性
         ck.setMaxAge(60 * 60 * 24 * 365); //单位是秒。如果是-1，代表永久。如果maxAge不设置，cookie不会写入硬盘，而是写入内存，只在当前页面有效
         log.info("write cookieName:{}, cookieValue:{}", ck.getName(), ck.getValue());
         response.addCookie(ck);
