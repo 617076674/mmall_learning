@@ -33,7 +33,7 @@ public class OrderController {
     @ResponseBody
     public ServerResponse create(HttpSession session, Integer shippingId){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user ==null){
+        if (null == user) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         return iOrderService.createOrder(user.getId(),shippingId);

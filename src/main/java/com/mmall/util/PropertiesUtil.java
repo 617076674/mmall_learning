@@ -10,6 +10,8 @@ import java.util.Properties;
 @Slf4j
 public class PropertiesUtil {
 
+    //todo getBooleanProperty(String key)
+
     private static Properties props;
 
     static {
