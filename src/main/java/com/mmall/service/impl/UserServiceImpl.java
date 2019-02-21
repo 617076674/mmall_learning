@@ -7,6 +7,7 @@ import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
 import com.mmall.util.RedisShardedPoolUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -138,11 +139,11 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("密码更新失败");
     }
 
-    public ServerResponse<User> updateInformation(User user){
+    public ServerResponse<User> updateInformation(User user) {
         //username是不能被更新的
         //email也要进行一个校验,校验新的email是不是已经存在,并且存在的email如果相同的话,不能是我们当前的这个用户的.
         int resultCount = userMapper.checkEmailByUserId(user.getEmail(),user.getId());
-        if(resultCount > 0){
+        if (resultCount > 0) {
             return ServerResponse.createByErrorMessage("email已存在,请更换email再尝试更新");
         }
         User updateUser = new User();
@@ -158,26 +159,20 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("更新个人信息失败");
     }
 
-    public ServerResponse<User> getInformation(Integer userId){
+    public ServerResponse<User> getInformation(Integer userId) {
         User user = userMapper.selectByPrimaryKey(userId);
-        if(user == null){
+        if (null == user) {
             return ServerResponse.createByErrorMessage("找不到当前用户");
         }
-        user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
+        user.setPassword(StringUtils.EMPTY);
         return ServerResponse.createBySuccess(user);
-
     }
 
-    //backend
-    /**
-     * 校验是否是管理员
-     * @param user
-     * @return
-     */
-    public ServerResponse checkAdminRole(User user){
-        if(user != null && user.getRole().intValue() == Const.Role.ROLE_ADMIN){
+    public ServerResponse checkAdminRole(User user) {
+        if (null != user && Const.Role.ROLE_ADMIN == user.getRole().intValue()) {
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByError();
     }
+
 }
