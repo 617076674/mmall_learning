@@ -24,8 +24,6 @@ public interface IOrderService {
 
     ServerResponse<PageInfo> getOrderList(Integer userId, int pageNum, int pageSize);
 
-    //backend
-
     ServerResponse<PageInfo> manageList(int pageNum,int pageSize);
 
     ServerResponse<OrderVo> manageDetail(Long orderNo);
@@ -34,5 +32,6 @@ public interface IOrderService {
 
     ServerResponse<String> manageSendGoods(Long orderNo);
 
+    void closeOrder(int hour);
 
 }

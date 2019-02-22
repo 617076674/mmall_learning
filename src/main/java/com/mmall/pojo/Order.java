@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class Order {
+
     private Integer id;
 
     private Long orderNo;
@@ -37,4 +38,5 @@ public class Order {
     private Date createTime;
 
     private Date updateTime;
+
 }
