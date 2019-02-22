@@ -103,4 +103,19 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
+    public static String getSet(String key, String value){
+        ShardedJedis shardedJedis = null;
+        String result = null;
+        try {
+            shardedJedis = RedisShardedPool.getJedis();
+            result = shardedJedis.getSet(key, value);
+        } catch (Exception e) {
+            log.error("getSet key:{} value:{} error", key, value, e);
+            RedisShardedPool.returnBrokenResource(shardedJedis);
+            return result;
+        }
+        RedisShardedPool.returnResource(shardedJedis);
+        return result;
+    }
+
 }
