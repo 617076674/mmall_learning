@@ -88,4 +88,19 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
+    public static Long setnx(String key, String value){   //exTime的单位是秒
+        ShardedJedis shardedJedis = null;
+        Long result = null;
+        try {
+            shardedJedis = RedisShardedPool.getJedis();
+            result = shardedJedis.setnx(key, value);
+        } catch (Exception e) {
+            log.error("setex key:{} value:{} error", key, value, e);
+            RedisShardedPool.returnBrokenResource(shardedJedis);
+            return result;
+        }
+        RedisShardedPool.returnResource(shardedJedis);
+        return result;
+    }
+
 }
